@@ -21,7 +21,7 @@ connection.once("open", () => {
 });
 
 app.use("/done", doneRouter);
-app.use("/", inProgress);
+app.use("/progress", inProgress);
 
 app.listen(port, () =>{
     console.log(`Server is running on PORT ${port}`);
