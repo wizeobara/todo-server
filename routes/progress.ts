@@ -10,9 +10,11 @@ router.route("/").get((req, res) => {
 });
 
 router.route("/").post((req, res) => {
-    const description = req.body.description;
+    const title = req.body.title;
+    const completed = req.body.completed;
     const newTask = new Task({
-        description,
+        "title": title,
+        "completed": completed
     });
 
     newTask.save()
@@ -35,7 +37,7 @@ router.route("/:id").delete((req, res) => {
 router.route("/update/:id").post((req, res) => {
     Task.findById(req.params.id)
     .then((task: any) => {
-        task.description = req.body.description;
+        task.title = req.body.title;
 
         task.save()
         .then(() => res.json("task updated"))
@@ -43,5 +45,18 @@ router.route("/update/:id").post((req, res) => {
     })
     .catch((err) => res.status(400).json("Error:" + err));
 });
+
+router.route("/complete/:id").post((req, res) => {
+    Task.findById(req.params.id)
+    .then((task: any) => {
+        task.completed = req.body.completed;
+
+        task.save()
+        .then(() => res.json("task updated"))
+        .catch((err) => res.status(400).json("Error:" + err));
+    })
+    .catch((err) => res.status(400).json("Error:" + err));
+});
+
 
 export = router;

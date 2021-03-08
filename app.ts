@@ -2,12 +2,12 @@ import cors from "cors";
 import dotenv from "dotenv";
 import express from "express";
 import mongoose from "mongoose";
-import doneRouter from "./routes/done";
 import inProgress from "./routes/progress";
 
 dotenv.config();
 
 const app = express();
+app.use(express.urlencoded({ extended: true }));
 const port =  5000;
 
 app.use(cors());
@@ -20,7 +20,6 @@ connection.once("open", () => {
     console.log("MongoDB Atlas connection established")
 });
 
-app.use("/done", doneRouter);
 app.use("/progress", inProgress);
 
 app.listen(port, () =>{
